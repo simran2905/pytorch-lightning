@@ -151,6 +151,16 @@ class CheckpointConnector:
         if on_gpu:
             model.cuda(self.trainer.root_gpu)
 
+    def restore_model_weights(self, checkpoint_path: Optional[Union[str, Path]]) -> None:
+        """ Restore only the model weights. """
+        checkpoint = self.loaded_checkpoint
+        if checkpoint_path is not None:
+            checkpoint = pl_load(checkpoint_path, map_location=(lambda storage, loc: storage))
+
+        model = self.trainer.lightning_module
+        model.on_load_checkpoint(self.loaded_checkpoint)
+        model.load_state_dict(checkpoint["state_dict"])
+
     def restore_training_state(self):
         """
         Restore trainer state.
