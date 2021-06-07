@@ -742,10 +742,6 @@ class Trainer(
         self._call_configure_sharded_model(model)  # allow user to setup in model sharded environment
         self.accelerator.setup(self, model)  # note: this sets up self.lightning_module
 
-        # restore optimizers, etc.
-        # TODO: split up even further
-        self.checkpoint_connector.restore_training_state()
-
         # ----------------------------
         # INSPECT THE CORE LOOPS
         # ----------------------------
@@ -815,6 +811,9 @@ class Trainer(
             self.logger.log_hyperparams(self.lightning_module.hparams_initial)
             self.logger.log_graph(self.lightning_module)
             self.logger.save()
+
+        # restore optimizers, etc.
+        self.checkpoint_connector.restore_training_state()
 
     def _post_dispatch(self):
         self.accelerator.post_dispatch(self)
