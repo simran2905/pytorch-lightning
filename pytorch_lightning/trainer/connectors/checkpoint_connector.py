@@ -33,13 +33,12 @@ if _OMEGACONF_AVAILABLE:
 
 class CheckpointConnector:
 
-    def __init__(self, trainer, resume_from_checkpoint: Optional[Union[Path, str]] = None):
+    def __init__(self, trainer, resume_from_checkpoint: Optional[Union[str, Path]] = None):
         self.trainer = trainer
         self.resume_checkpoint_path = resume_from_checkpoint
-
+        self.loaded_checkpoint = dict()
         # used to validate checkpointing logic
         self.has_trained = False
-        self.loaded_checkpoint = dict()
 
     @property
     def hpc_resume_path(self) -> Optional[str]:
