@@ -13,7 +13,7 @@
 # limitations under the License.
 import contextlib
 from abc import ABC, abstractmethod
-from typing import Any, Callable, Dict, Generator, Iterable, Optional, Tuple, TypeVar, Union
+from typing import Any, Callable, Dict, Generator, Iterable, Optional, TypeVar, Union
 
 import torch
 from torch import Tensor
@@ -26,7 +26,6 @@ from pytorch_lightning.overrides.base import unwrap_lightning_module
 from pytorch_lightning.plugins.base_plugin import Plugin
 from pytorch_lightning.utilities import rank_zero_warn
 from pytorch_lightning.utilities.cloud_io import atomic_save
-from pytorch_lightning.utilities.cloud_io import load as pl_load
 from pytorch_lightning.utilities.types import _EVALUATE_OUTPUT, _PREDICT_OUTPUT
 
 TBroadcast = TypeVar("T")
